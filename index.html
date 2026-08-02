@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 लकी ड्रॉ – 5555 = 15</title>
+    <style>
+        /* रीसेट और बेसिक */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', sans-serif;
+            background: #0b0e1a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 0;
+            position: relative;
+        }
+
+        /* ---- कैनवस (सितारों के लिए) ---- */
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ---- मुख्य कार्ड ---- */
+        .main-box {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 248, 235, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(212, 160, 23, 0.4);
+            border-radius: 70px 20px 70px 20px;
+            padding: 3rem 2.5rem;
+            max-width: 600px;
+            width: 92%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 160, 23, 0.2);
+            transition: 0.3s;
+        }
+
+        h1 {
+            color: #f7d44a;
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(247, 212, 74, 0.4);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .sub-text {
+            color: #cfc1a6;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        /* ---- रीलों का कंटेनर ---- */
+        .reel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px 15px;
+            border-radius: 60px;
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .reel {
+            width: 70px;
+            height: 90px;
+            background: linear-gradient(145deg, #1f1f2e, #0d0d16);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3.8rem;
+            font-weight: 900;
+            color: #f7d44a;
+            text-shadow: 0 0 25px #f7d44a, 0 0 5px #b8860b;
+            box-shadow: inset 0 -4px 0 #b8860b, 0 8px 20px rgba(0, 0, 0, 0.6);
+            transition: 0.2s;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .equals {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #f7d44a;
+            padding: 0 8px;
+            text-shadow: 0 0 30px #f7d44a;
+        }
+
+        .sum-box {
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle at 30% 30%, #f7d44a, #b8860b);
+            border-radius: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3.8rem;
+            font-weight: 900;
+            color: #0b0e1a;
+            box-shadow: 0 0 50px #f7d44a, inset 0 -4px 0 #7a5f0a;
+            transition: 0.3s;
+            transform: scale(0.5);
+        }
+
+        .sum-box.pop {
+            animation: popScale 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popScale {
+            0% {
+                transform: scale(0.2);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.4);
+                opacity: 1;
+                box-shadow: 0 0 80px #f7d44a;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .reel-label {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            color: #a0907a;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+        .reel-label span {
+            width: 70px;
+            text-align: center;
+        }
+
+        .btn-draw {
+            background: linear-gradient(145deg, #f7d44a, #d4a017);
+            border: none;
+            padding: 16px 40px;
+            border-radius: 60px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1a1510;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #7a5f0a, 0 10px 30px rgba(212, 160, 23, 0.4);
+            transition: all 0.08s linear;
+            letter-spacing: 2px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        .btn-draw:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 0 #7a5f0a, 0 20px 40px rgba(212, 160, 23, 0.6);
+        }
+        .btn-draw:active {
+            transform: translateY(8px);
+            box-shadow: 0 4px 0 #7a5f0a;
+        }
+        .btn-draw:disabled {
+            opacity: 0.5;
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #7a5f0a;
+            pointer-events: none;
+        }
+
+        .footer-msg {
+            margin-top: 25px;
+            color: #b8aa94;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            border-top: 1px dashed rgba(212, 160, 23, 0.2);
+            padding-top: 18px;
+        }
+
+        @media (max-width: 520px) {
+            .main-box {
+                padding: 1.8rem 1rem;
+                border-radius: 40px 10px 40px 10px;
+            }
+            .reel {
+                width: 55px;
+                height: 70px;
+                font-size: 2.8rem;
+            }
+            .sum-box {
+                width: 70px;
+                height: 70px;
+                font-size: 2.8rem;
+            }
+            .equals {
+                font-size: 2.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="starCanvas"></canvas>
+
+    <div class="main-box">
+        <h1>✨ Kon Banega KarorPati ✨</h1>
+        <div class="sub-text">🎰 Today's Winner</div>
+
+        <div class="reel-container" id="reelContainer">
+            <div class="reel" id="reel1">0</div>
+            <div class="reel" id="reel2">0</div>
+            <div class="reel" id="reel3">0</div>
+            <div class="reel" id="reel4">0</div>
+            <div class="equals">=</div>
+            <div class="sum-box" id="sumBox">0</div>
+        </div>
+
+        <button class="btn-draw" id="drawBtn">🎲 Check Number</button>
+        <div class="footer-msg">⭐ Aaj ka jo Winner hai. wo Bank account number or ifsc code bhej De ⭐</div>
+    </div>
+
+    <script>
+        // =======================================================
+        // 🔥 यहाँ अपना मनचाहा नंबर और योग लिखें – बाकी सब अपने आप चलेगा
+        // =======================================================
+        const CONFIG = {
+            digits: [5, 3, 5, 6],   // चार अंक (जैसे [5,5,5,5])
+            sum: 15                 // इन चारों अंकों का योग (5+5+5+5=15)
+        };
+        // =======================================================
+
+        // ---------- सितारों (Stars) का कैनवस ----------
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Star {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speed = 0.008 + Math.random() * 0.025;
+                this.opacity = Math.random();
+                this.phase = Math.random() * Math.PI * 2;
+                this.color = Math.random() > 0.6 ?
+                    `rgba(247, 212, 74, ` :
+                    `rgba(255, 255, 255, `;
+            }
+            draw(time) {
+                const flicker = Math.sin(time * this.speed + this.phase) * 0.4 + 0.6;
+                const alpha = this.opacity * flicker * 0.9 + 0.1;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.shadowColor = this.color.includes('247') ? '#f7d44a' : '#ffffff';
+                ctx.shadowBlur = this.size * 6;
+                ctx.fillStyle = this.color + alpha + ')';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        for (let i = 0; i < 150; i++) {
+            stars.push(new Star());
+        }
+
+        function drawStars(time) {
+            ctx.clearRect(0, 0, width, height);
+            for (let star of stars) {
+                star.draw(time);
+            }
+            requestAnimationFrame(drawStars);
+        }
+        requestAnimationFrame(drawStars);
+
+        // ---------- रीलों का मैजिक (Slot Machine) ----------
+        const reel1 = document.getElementById('reel1');
+        const reel2 = document.getElementById('reel2');
+        const reel3 = document.getElementById('reel3');
+        const reel4 = document.getElementById('reel4');
+        const sumBox = document.getElementById('sumBox');
+        const drawBtn = document.getElementById('drawBtn');
+
+        let isSpinning = false;
+        let timers = [];
+
+        function resetReels() {
+            reel1.textContent = '0';
+            reel2.textContent = '0';
+            reel3.textContent = '0';
+            reel4.textContent = '0';
+            sumBox.textContent = '0';
+            sumBox.classList.remove('pop');
+            sumBox.style.transform = 'scale(0.5)';
+        }
+
+        function randomDigit() {
+            return Math.floor(Math.random() * 10);
+        }
+
+        function startSpin() {
+            if (isSpinning) return;
+            isSpinning = true;
+            drawBtn.disabled = true;
+            resetReels();
+
+            timers.forEach(t => clearInterval(t));
+            timers = [];
+
+            const reels = [reel1, reel2, reel3, reel4];
+            const stopTimes = [800, 1400, 2000, 2600]; // मिलीसेकंड
+
+            reels.forEach((reel, index) => {
+                let interval = setInterval(() => {
+                    reel.textContent = randomDigit();
+                }, 70);
+                timers.push(interval);
+
+                setTimeout(() => {
+                    clearInterval(interval);
+                    // ✅ यहाँ CONFIG का अंक सेट करें
+                    reel.textContent = CONFIG.digits[index];
+                    // छोटा-बड़ा इफेक्ट
+                    reel.style.transform = 'scale(1.3)';
+                    setTimeout(() => {
+                        reel.style.transform = 'scale(1)';
+                    }, 150);
+                }, stopTimes[index]);
+            });
+
+            // sum को CONFIG.sum तक पहुँचाएँ
+            let sumInterval = setInterval(() => {
+                let current = parseInt(sumBox.textContent);
+                if (current < CONFIG.sum) {
+                    sumBox.textContent = current + 1;
+                    sumBox.style.transform = 'scale(0.9)';
+                    setTimeout(() => { sumBox.style.transform = 'scale(0.5)'; }, 50);
+                } else {
+                    clearInterval(sumInterval);
+                }
+            }, 120);
+            timers.push(sumInterval);
+
+            // सब खत्म होने पर पॉप इफेक्ट
+            setTimeout(() => {
+                sumBox.textContent = CONFIG.sum;
+                sumBox.classList.add('pop');
+                sumBox.style.transform = 'scale(1)';
+
+                document.getElementById('reelContainer').style.boxShadow = '0 0 80px rgba(247, 212, 74, 0.6)';
+                setTimeout(() => {
+                    document.getElementById('reelContainer').style.boxShadow = '0 8px 20px rgba(0,0,0,0.6)';
+                }, 400);
+
+                isSpinning = false;
+                drawBtn.disabled = false;
+            }, 2800);
+        }
+
+        drawBtn.addEventListener('click', startSpin);
+
+        window.addEventListener('load', () => {
+            setTimeout(startSpin, 400);
+        });
+    </script>
+</body>
+</html>
